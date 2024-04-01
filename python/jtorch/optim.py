@@ -8,7 +8,7 @@ class Optimizer(jt.optim.Optimizer):
         jt.flags.node_order = 1
         params_has_grad = []
         for pg in self.param_groups:
-            pg["grads"] = [ 0 if p.grad is None else p.grad#.float32()
+            pg["grads"] = [ jt.zeros_like(p) if p.grad is None else p.grad#.float32()
                 for p in pg["params"] ]
             for p in pg["params"]:
                 if p.requires_grad:
@@ -65,6 +65,7 @@ class Optimizer(jt.optim.Optimizer):
 
 class AdamW(Optimizer):
     def __init__(self, params, lr, eps=1e-8, betas=(0.9, 0.999), weight_decay=0,use_fp32=True):
+        print("lr:", lr)
         super().__init__(params, lr)
         self.eps = eps
         self.betas = betas
@@ -72,7 +73,7 @@ class AdamW(Optimizer):
 
         self.use_fp32 = use_fp32
         # assert weight_decay==0, "weight_decay is not supported yet"
-        
+      
         # initialize required arguments for each param_groups
         for pg in self.param_groups:
             values = pg["values"] = []
@@ -106,9 +107,11 @@ class AdamW(Optimizer):
             eps = pg.get("eps", self.eps)
             weight_decay = pg.get("weight_decay", self.weight_decay)
             b0, b1 = pg.get("betas", self.betas)
-            
+          
             for p, g, v, m,mp in zip(pg["params"], pg["grads"], pg["values"], pg["m"],pg['masterparams']):
                 if p.is_stop_grad(): continue
+                #if g.abs().sum().item() < 1e-8: continue
+               #import pdb; pdb.set_trace()
                 c_p = (mp * (1 - lr * weight_decay))
                 mp.update(c_p)
                 if self.use_fp32:

@@ -18,7 +18,6 @@ device.__reduce__ = lambda self: (device, (self.type,))
 device.__module__ = "jtorch"
 jt.jittor_core.device = device
 
-
 def handle_dtype(args, kw, dtype):
     def convert(x):
         if isinstance(x, jt.Var):
@@ -175,6 +174,8 @@ def make_module(cls):
                 del kw["dtype"]
             self._dtype = dtype
             with jt.flag_scope(th_mode=0):
+                if "device" in kw:
+                    del kw["device"]
                 super().__init__(*args, **kw)
             for k,v in self.__dict__.items():
                 if not k.startswith("_") and isinstance(v, Var) \
@@ -426,3 +427,4 @@ def _data_set(x, value):
     x.assign(value)
     
 Tensor.data = property(_data_get, _data_set)
+Tensor.layout = None

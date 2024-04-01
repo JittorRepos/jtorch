@@ -67,3 +67,6 @@ sys.modules["torchvision.transforms.functional"] = load_mod("jtorch.vision.trans
 jtorch.vision.transforms.functional = jtorch.vision.transforms
 
 sys.modules['torch.fft'] = load_mod("jtorch.fft")
+
+sys.modules['torch.distributions'] = load_mod("jtorch.distributions")
+sys.modules['torch.distributions.relaxed_bernoulli'] = load_mod("jtorch.distributions")
