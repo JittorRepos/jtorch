@@ -155,9 +155,9 @@ class LRScheduler:
     def __init__(self, optimizer, last_epoch=-1, verbose=False):
 
         # Attach optimizer
-        if not isinstance(optimizer, Optimizer):
-            raise TypeError('{} is not an Optimizer'.format(
-                type(optimizer).__name__))
+       #if not isinstance(optimizer, Optimizer):
+       #    raise TypeError('{} is not an Optimizer'.format(
+       #        type(optimizer).__name__))
         self.optimizer = optimizer
 
         # Initialize epoch and base learning rates
