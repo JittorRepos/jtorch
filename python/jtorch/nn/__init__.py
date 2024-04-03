@@ -75,10 +75,6 @@ class Flatten(Module):
     def forward(self, x) -> jt.Var:
         return x.flatten(self.start_dim, self.end_dim)
 
-class SiLU(Module):
-    def forward(self, x) -> jt.Var:
-        return x * jt.sigmoid(x)
-
 class _IncompatibleKeys:
     def __init__(self, missing_keys, unexpected_keys):
         self.missing_keys = missing_keys
