@@ -19,6 +19,8 @@ for k,v in jt.nn.__dict__.items():
 from collections import OrderedDict
 from collections import abc as container_abcs
 
+SiLU = jt.nn.silu
+
 class Module(ModuleMisc, jt.Module):
     
     def __call__(self, *args, **kw):
