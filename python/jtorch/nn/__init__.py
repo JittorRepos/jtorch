@@ -19,8 +19,6 @@ for k,v in jt.nn.__dict__.items():
 from collections import OrderedDict
 from collections import abc as container_abcs
 
-SiLU = jt.nn.silu
-
 class Module(ModuleMisc, jt.Module):
     
     def __call__(self, *args, **kw):
@@ -76,6 +74,10 @@ class Flatten(Module):
 
     def forward(self, x) -> jt.Var:
         return x.flatten(self.start_dim, self.end_dim)
+
+class SiLU(Module):
+    def forward(self, x) -> jt.Var:
+        return x * jt.sigmoid(x)
 
 class _IncompatibleKeys:
     def __init__(self, missing_keys, unexpected_keys):
