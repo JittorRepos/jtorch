@@ -24,7 +24,7 @@ setuptools.setup(
     package_data={'': ['*', '*/*', '*/*/*','*/*/*/*','*/*/*/*/*','*/*/*/*/*/*']},
     python_requires=">=3.7",
     install_requires=[
-        "jittor>=1.3.8.6",
+        "jittor",
         "requests",
         "torch@https://pypi.jittor.org/packages/torch-2.0.0.tar.gz"
     ],
