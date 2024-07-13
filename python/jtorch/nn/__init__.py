@@ -3,7 +3,7 @@ from typing import List, Optional, Tuple, Iterable, Iterator, Mapping, Any, over
 from typing_extensions import Self
 import jittor as jt
 from jtorch import make_module, Tensor, ModuleMisc, wrapper
-#from . import init
+from . import init # import all functions from init module, so that they can be accessed directly from nn module
 from jittor import Function
 import operator
 import warnings
