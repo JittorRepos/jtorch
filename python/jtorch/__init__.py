@@ -101,7 +101,12 @@ Tensor.ndimension = lambda self: self.ndim
 Tensor.nelement = lambda self: self.numel()
 Tensor.cuda = lambda self: self
 def device_get(x:Tensor):
-    return device("cpu") if not jt.has_cuda or not jt.flags.use_cuda else device("cuda")
+    if jt.has_cuda and jt.flags.use_cuda:
+        return device("cuda")
+    elif jt.compiler.has_acl and jt.flags.use_acl:
+        return device("cuda")
+    else:
+        return device("cpu")
 Tensor.device = property(device_get)
 
 def argmax(x: Var, dim=None, keepdim: bool = False):
